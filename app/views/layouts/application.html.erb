@@ -10,6 +10,11 @@
   </head>
 
   <body>
+    <nav>
+       <%= link_to 'Home', root_path %>
+       |
+       <%= link_to 'About Us', about_path %>
+     </nav>
     <%= yield %>
   </body>
 </html>
