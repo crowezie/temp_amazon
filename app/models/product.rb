@@ -18,6 +18,19 @@ class Product < ApplicationRecord
   before_validation :set_defaults
   before_save :capitalize_title
 
+
+  def self.search(word)
+    # Find products whose title or description contain the search term `word`, case insensitively
+    where("title ILIKE '%#{word}%' OR description ILIKE '%#{word}%'").order(
+      # Order first by products whose titles that contain the `word`
+      "title ILIKE '%#{word}%' DESC",
+      # Then, if a product's title and description contain the `word`, then
+      # put products whose descriptions also contain the `word` later in results
+      "description ILIKE '%#{word}%' ASC"
+    )
+    # (i.e. the order of the products: only titles, both, only descriptions)
+  end
+  
   private
 
   def set_defaults
