@@ -23,6 +23,7 @@ class ProductsController < ApplicationController
   end
 
   def show
+    @review = Review.new
     @reviews = @product.reviews.order(created_at: :desc)
   end
 

@@ -5,6 +5,30 @@
 <%= link_to "Edit Product", edit_product_path(@product) %> |
 <%= link_to "Delete Product", product_path(@product), method: :delete, data: { confirm: 'Are you sure that you want to delete this product?' } %>
 
+<%#
+  New Review Form
+  `form_for [@product, @review]` requires there to be a method called
+  `product_reviews_path` defined in routes. Using the `resources` method in
+  routes, this gets defined for us (see config/routes.rb)
+  @review is an empty (non-persisted) review (Review.new) defined in `products#show`
+%>
+<%= form_for [@product, @review] do |f| %>
+  <% if @review.errors.present? %>
+    <p>
+      <%= @review.errors.full_messages.join(', ') %>
+    </p>
+  <% end %>
+  <div>
+    <%= f.label :rating %>
+    <%= f.number_field :rating, in: 1..5 %>
+  </div>
+  <div>
+    <%= f.label :body %>
+    <%= f.text_area :body %>
+  </div>
+  <%= f.submit %>
+<% end %>
+
 <h3>Reviews</h3>
 <%#
   Display all of the reviews for this product
