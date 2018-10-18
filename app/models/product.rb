@@ -1,4 +1,6 @@
 class Product < ApplicationRecord
+  
+   has_many :reviews, dependent: :destroy
 
   validates :title, {
     presence: true,
@@ -30,7 +32,7 @@ class Product < ApplicationRecord
     )
     # (i.e. the order of the products: only titles, both, only descriptions)
   end
-  
+
   private
 
   def set_defaults

@@ -7,16 +7,29 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # Make sure to clear old data out of your db when you run rails db:seed
+# Reviews will also be deleted since Product.destroy_all will run our
+# 'dependent: :destroy' callback.
 Product.destroy_all
 
 # Now go ahead and create new data
 1000.times do
-  Product.create({
+  p = Product.create({
     title: Faker::Hacker.noun,
     description: Faker::Hacker.say_something_smart,
     price: Faker::Commerce.price
   })
+
+  if p.valid?
+    rand(0..10).times.each do
+      Review.create(
+        rating: Faker::Number.between(1, 5),
+        body: Faker::Seinfeld.quote,
+        product: p
+      )
+    end
+  end
 end
 
 # It's nice to print object counts to make sure it created what you expected.
 puts "Created #{Product.count} products"
+puts "Created #{Review.count} reviews"
