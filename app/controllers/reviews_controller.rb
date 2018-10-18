@@ -1,5 +1,5 @@
 class ReviewsController < ApplicationController
-  
+
   def create
     @product = Product.find(params[:product_id])
     @review = Review.new review_params
@@ -10,6 +10,12 @@ class ReviewsController < ApplicationController
       @reviews = @product.reviews.order(created_at: :desc)
       render 'products/show'
     end
+  end
+
+  def destroy
+    @review = Review.find(params[:id])
+    @review.destroy
+    redirect_to @review.product
   end
 
   private
