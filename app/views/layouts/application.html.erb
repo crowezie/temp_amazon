@@ -21,9 +21,15 @@
       |
       <%= link_to 'New Product', new_product_path %>
       |
-      <%= link_to 'Sign In', new_sessions_path %>
-      |
-      <%= link_to 'Sign Up', new_user_path %>
+      <% if user_signed_in? %>
+        <span>Hello, <%= current_user.first_name %>!</span>
+        |
+        <%= link_to 'Sign Out', sessions_path, method: :delete %>
+      <% else %>
+        <%= link_to 'Sign In', new_sessions_path %>
+        |
+        <%= link_to 'Sign Up', new_user_path %>
+      <% end %>
     </nav>
 
     <% if flash[:notice].present? || flash[:alert].present? %>
