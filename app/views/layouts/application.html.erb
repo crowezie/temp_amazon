@@ -11,16 +11,24 @@
 
   <body>
     <nav>
-       <%= link_to 'Home', root_path %>
-       |
-       <%= link_to 'About Us', about_path %>
-       |
-       <%= link_to 'Contact Us', contact_path %>
-       |
-       <%= link_to 'All Products', products_path %>
-       |
-       <%= link_to 'New Product', new_product_path %>
-     </nav>
+      <%= link_to 'Home', root_path %>
+      |
+      <%= link_to 'About Us', about_path %>
+      |
+      <%= link_to 'Contact Us', contact_path %>
+      |
+      <%= link_to 'All Products', products_path %>
+      |
+      <%= link_to 'New Product', new_product_path %>
+      <%= link_to 'Sign Up', new_user_path %>
+    </nav>
+
+    <% if flash[:notice].present? || flash[:alert].present? %>
+      <div class="flash-message">
+        <%= flash[:notice] || flash[:alert] %>
+      </div>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>

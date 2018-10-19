@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   get('/contact_us', { to: 'contacts#index', as: :contact })
   post('/contact_us', { to: 'contacts#create' })
 
+  resources :users, only: [:new, :create]
+
   resources :products do
     # creates the following route for us:
     # post('/products/:product_id/reviews', { to: 'reviews#create', as: :product_reviews })
