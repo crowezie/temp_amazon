@@ -7,6 +7,13 @@ Rails.application.routes.draw do
 
   resources :users, only: [:new, :create]
 
+  # Notice that `resource` is singular. Unlike `resources`,
+  # `resource` will create routes that are meant to do CRUD
+  # on a single thing. There will be no index route or any
+  # route with :id. When using singular resource, the controller
+  # it links to should still be plural.
+  resource :sessions, only: [:new, :create]
+
   resources :products do
     # creates the following route for us:
     # post('/products/:product_id/reviews', { to: 'reviews#create', as: :product_reviews })
