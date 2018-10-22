@@ -23,6 +23,10 @@
       |
       <% if user_signed_in? %>
         <span>Hello, <%= current_user.first_name %>!</span>
+        <% if current_user.admin? %>
+          |
+          <%= link_to 'Dashboard', admin_dashboard_index_path %>
+        <% end %>
         |
         <%= link_to 'Sign Out', sessions_path, method: :delete %>
       <% else %>

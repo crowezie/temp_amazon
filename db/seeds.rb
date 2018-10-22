@@ -15,14 +15,19 @@ Review.delete_all
 Product.delete_all
 User.delete_all
 
-User.create(
-  first_name: 'Seed',
-  last_name: 'User',
-  email: 'seed@seed.com',
-  password: 'supersecret'
+PASSWORD = "supersecret"
+NUM_OF_USERS = 20
+NUM_OF_PRODUCTS = 100
+
+super_user = User.create(
+  first_name: "Jon",
+  last_name: "Snow",
+  email: "js@winterfell.gov",
+  password: PASSWORD,
+  admin: true
 )
 
-10.times do |num|
+NUM_OF_USERS.times do |num|
   full_name = Faker::SiliconValley.character.split(' ')
   first_name = full_name[0]
   last_name = full_name[1]
@@ -36,7 +41,7 @@ end
 
 users = User.all
 # Now go ahead and create new data
-1000.times do
+NUM_OF_PRODUCTS.times do
   p = Product.create({
     title: Faker::Hacker.noun,
     description: Faker::Hacker.say_something_smart,
@@ -60,3 +65,4 @@ end
 puts "Created #{User.count} users"
 puts "Created #{Product.count} products"
 puts "Created #{Review.count} reviews"
+puts "Login as admin with #{super_user.email} and password of '#{PASSWORD}'!"

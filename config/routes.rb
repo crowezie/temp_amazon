@@ -7,6 +7,10 @@ Rails.application.routes.draw do
 
   resources :users, only: [:new, :create]
 
+  namespace :admin do
+    resources :dashboard, only: [:index]
+  end
+
   # Notice that `resource` is singular. Unlike `resources`,
   # `resource` will create routes that are meant to do CRUD
   # on a single thing. There will be no index route or any
