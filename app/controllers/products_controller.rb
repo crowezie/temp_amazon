@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
   before_action :find_product, only: [:show, :edit, :update, :destroy]
+  before_action :authorize!, only: [:edit, :update, :destroy]
 
   def new
     @product = Product.new
@@ -26,7 +27,17 @@ class ProductsController < ApplicationController
 
   def show
     @review = Review.new
-    @reviews = @product.reviews.order(created_at: :desc)
+    # In this case only the product owner will have all reviews available in the
+    # through @reviews (including hidden reviews).
+    # You could also remove this logic here and do some logic in the view. Your use case (and
+    # for now, the size of your Rails toolset) will determine the best way to things.
+    # We've done it this way because with the tools available to us it minimizes the
+    # amount of repeated code and if else statements in our view.
+    if can? :crud, @product
+      @reviews = @product.reviews.order(created_at: :desc)
+    else
+      @reviews = @product.reviews.where(hidden: false).order(created_at: :desc)
+    end
   end
 
   def edit
@@ -55,4 +66,7 @@ class ProductsController < ApplicationController
     @product = Product.find params[:id]
   end
 
+  def authorize!
+   redirect_to root_path, alert: "access denied" unless can? :crud, @product
+  end
 end

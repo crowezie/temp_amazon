@@ -24,4 +24,6 @@ Rails.application.routes.draw do
     # "filled in"
     resources :reviews, shallow: true, only: [:create, :destroy]
   end
+
+  patch "/reviews/:id/toggle" => "reviews#toggle_hidden", as: "toggle_hidden"
 end
